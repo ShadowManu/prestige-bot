@@ -1,11 +1,11 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
-export class Users1520195917088 implements MigrationInterface {
+export class User1520195917088 implements MigrationInterface {
 
   public async up(queryRunner: QueryRunner): Promise<any> {
     queryRunner.query(`
-      CREATE TABLE users (
-        id integer PRIMARY KEY,
+      CREATE TABLE user (
+        username text PRIMARY KEY,
         prestige integer NOT NULL
       );
     `);

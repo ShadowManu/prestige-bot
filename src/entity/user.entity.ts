@@ -2,8 +2,8 @@ import { Entity, PrimaryColumn, Column } from "typeorm";
 
 @Entity()
 export class User {
-  @PrimaryColumn('integer')
-  id?: number;
+  @PrimaryColumn('text')
+  username?: string;
 
   @Column('integer')
   prestige?: number;

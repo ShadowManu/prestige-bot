@@ -1,15 +1,11 @@
-import { config } from 'dotenv';
-import * as Tg from 'node-telegram-bot-api';
+import { createConnection, Connection } from 'typeorm';
 
-config();
+import { configure } from './config';
+import { registerBot } from './bot';
 
-const token = process.env.TELEGRAM_TOKEN!;
+async function bootstrap() {
+  await configure();
+  registerBot();
+}
 
-const bot = new Tg(token, { polling: true });
-
-bot.on('message', (msg: Tg.Message) => {
-  const chatId = msg.chat.id;
-  const message = msg.text;
-
-  bot.sendMessage(chatId, 'Received your message: ' + message);
-});
+bootstrap();

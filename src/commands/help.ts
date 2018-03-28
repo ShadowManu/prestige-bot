@@ -4,7 +4,7 @@ import * as Tg from 'node-telegram-bot-api';
 
 export const HELP_REGEX = /^\/help$/;
 
-export async function help(bot: Tg) {
+export async function help(bot: Tg, msg: Tg.Message) {
 	
     const chatId = msg.chat.id;
     const message = dedent`

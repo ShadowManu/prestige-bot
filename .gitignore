@@ -61,7 +61,7 @@ typings/
 .next
 
 # Database file
-/database.sql
+/database.sqlite3
 
 # Build files
 /dist/

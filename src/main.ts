@@ -1,11 +1,17 @@
-import { createConnection, Connection } from 'typeorm';
+import { TELEGRAM_TOKEN } from './config';
+import { createConnection } from 'typeorm';
 
-import { configure } from './config';
-import { registerBot } from './bot';
+import * as Tg from 'node-telegram-bot-api';
+
+import * as c from './commands';
 
 async function bootstrap() {
-  await configure();
-  registerBot();
+  await createConnection();
+
+  const bot = new Tg(TELEGRAM_TOKEN, { polling: true });
+
+  // Add all event listeners
+  bot.onText(c.REGISTER_REGEX, msg => c.registerUser(bot, msg));
 }
 
 bootstrap();

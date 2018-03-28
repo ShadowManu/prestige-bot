@@ -3,7 +3,7 @@ import * as Tg from 'node-telegram-bot-api';
 
 import { User } from '../entity';
 
-export const SHOW_REGEX = /^\/showprestige$/;
+export const SHOW_REGEX = /^\/show@TheRealPrestigeBot$/;
 
 export async function showPrestige(bot: Tg, msg: Tg.Message) {
   const chatId = msg.chat.id;

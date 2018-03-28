@@ -3,7 +3,7 @@ import * as Tg from 'node-telegram-bot-api';
 
 import { User } from '../entity';
 
-export const SEND_REGEX = /^\/sendprestige @(\S+) (\d+)$/;
+export const SEND_REGEX = /^\/send@TheRealPrestigeBot @(\S+) (\d+)$/;
 
 export async function sendPrestige(bot: Tg, msg: Tg.Message, match: RegExpExecArray) {
   const chatId = msg.chat.id;
@@ -37,8 +37,8 @@ export async function sendPrestige(bot: Tg, msg: Tg.Message, match: RegExpExecAr
   const fromPrestige = from.prestige - quantity;
   const toPrestige = to.prestige + quantity;
 
-  await getRepository(User).save({ username: fromUsername, prestige: fromPrestige });
-  await getRepository(User).save({ username: toUsername, prestige: toPrestige });
+  await getRepository(User).save({ username: fromUsername, prestige: toPrestige });
+  await getRepository(User).save({ username: toUsername, prestige: fromPrestige });
 
   await bot.sendMessage(chatId, `User ${fromUsername} now has ${fromPrestige}, and user ${toUsername} now has ${toPrestige}`);
 }

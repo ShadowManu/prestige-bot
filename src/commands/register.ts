@@ -5,7 +5,7 @@ import { User } from '../entity';
 
 const BASE_PRESTIGE = 50;
 
-export const REGISTER_REGEX = /^\/prestigeregister$/;
+export const REGISTER_REGEX = /^\/register@TheRealPrestigeBot$/;
 
 export async function registerUser(bot: Tg, msg: Tg.Message) {
   const chatId = msg.chat.id;

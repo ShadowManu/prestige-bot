@@ -12,7 +12,7 @@ export async function help(bot: Tg, msg: Tg.Message) {
         <b>/list</b> : shows all user's current amount of prestige.
         <b>/register</b> : it register yourself.
         <b>/send</b> USER AMOUNT : it transfers the specified amount to the user.
-        <b>/show</b> : shows the your amount of prestige.
+        <b>/show</b> : shows your amount of prestige.
     `;
     await bot.sendMessage(chatId, message, { parse_mode: 'html'});
 }

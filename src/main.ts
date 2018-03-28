@@ -1,15 +1,20 @@
-import { config } from 'dotenv';
+import { TELEGRAM_TOKEN } from './config';
+import { createConnection } from 'typeorm';
+
 import * as Tg from 'node-telegram-bot-api';
 
-config();
+import * as c from './commands';
 
-const token = process.env.TELEGRAM_TOKEN!;
+async function bootstrap() {
+  await createConnection();
 
-const bot = new Tg(token, { polling: true });
+  const bot = new Tg(TELEGRAM_TOKEN, { polling: true });
 
-bot.on('message', (msg: Tg.Message) => {
-  const chatId = msg.chat.id;
-  const message = msg.text;
+  // Add all event listeners
+  bot.onText(c.LIST_REGEX, msg => c.listPrestige(bot, msg));
+  bot.onText(c.REGISTER_REGEX, msg => c.registerUser(bot, msg));
+  bot.onText(c.SEND_REGEX, (msg, match) => c.sendPrestige(bot, msg, match!));
+  bot.onText(c.SHOW_REGEX, msg => c.showPrestige(bot, msg));
+}
 
-  bot.sendMessage(chatId, 'Received your message: ' + message);
-});
+bootstrap();

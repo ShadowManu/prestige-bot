@@ -4,7 +4,7 @@ import * as Tg from 'node-telegram-bot-api';
 
 import { User } from '../entity';
 
-export const LIST_REGEX = /^\/listprestige$/;
+export const LIST_REGEX = /^\/list@TheRealPrestigeBot$/;
 
 export async function listPrestige(bot: Tg, msg: Tg.Message) {
   const chatId = msg.chat.id;

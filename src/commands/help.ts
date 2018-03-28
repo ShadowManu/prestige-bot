@@ -1,8 +1,6 @@
 import { getRepository } from 'typeorm';
 import * as Tg from 'node-telegram-bot-api';
 
-import { User } from '../entity';
-
 export const HELP_REGEX = /^\/help$/;
 
 export async function help(bot: Tg) {
@@ -16,6 +14,4 @@ export async function help(bot: Tg) {
 		`;
     await bot.sendMessage(chatId, message, { parse_mode: 'html'});
 
-  }
-  
 }

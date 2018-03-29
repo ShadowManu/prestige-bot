@@ -8,8 +8,9 @@
     "start:watch": "nodemon",
     "prestart:prod": "tsc",
     "start:prod": "node dist/main.js",
-    "test": "tsc --noEmit",
-    "lint": "tslint --project tsconfig.json"
+    "test": "npm run test:tsc && npm run test:lint",
+    "test:tsc": "tsc --noEmit",
+    "test:lint": "tslint --project tsconfig.json"
   },
   "dependencies": {
     "dedent": "^0.7.0",

@@ -15,7 +15,7 @@ export async function sendPrestige(bot: Tg, msg: Tg.Message, match: RegExpExecAr
   const to = await getRepository(User).findOneById(toUsername);
 
   if (fromUsername === toUsername) {
-    await bot.sendMessage(chatId, `Don't send yourself prestige, you dickhead.`);
+    await bot.sendMessage(chatId, `Don't send yourself prestige @${fromUsername}, you dickhead.`);
     return;
   }
 

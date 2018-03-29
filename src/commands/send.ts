@@ -1,5 +1,6 @@
 import { getRepository } from 'typeorm';
 import * as Tg from 'node-telegram-bot-api';
+import { isNil } from 'lodash';
 
 import { User } from '../entity';
 
@@ -8,10 +9,13 @@ export const SEND_REGEX = /^\/send@TheRealPrestigeBot @(\S+) (\d+)$/;
 export async function sendPrestige(bot: Tg, msg: Tg.Message, match: RegExpExecArray) {
   const chatId = msg.chat.id;
   const fromUsername = msg.from!.username!;
+
+  // tslint:disable:no-magic-numbers
   const toUsername = match[1];
   const quantity = +match[2];
+  // tslint:enable
 
-  const from = await getRepository(User).findOneById(fromUsername);
+  const frm = await getRepository(User).findOneById(fromUsername);
   const to = await getRepository(User).findOneById(toUsername);
 
   if (fromUsername === toUsername) {
@@ -19,26 +23,29 @@ export async function sendPrestige(bot: Tg, msg: Tg.Message, match: RegExpExecAr
     return;
   }
 
-  if (!from) {
+  if (isNil(frm)) {
     await bot.sendMessage(chatId, `You are not registered.`);
     return;
   }
 
-  if (!to) {
+  if (isNil(to)) {
     await bot.sendMessage(chatId, `User ${toUsername} is not registered.`);
     return;
   }
 
-  if (from.prestige < quantity) {
+  if (frm.prestige < quantity) {
     await bot.sendMessage(chatId, `You do not have enough prestige.`);
     return;
   }
 
-  const fromPrestige = from.prestige - quantity;
+  const fromPrestige = frm.prestige - quantity;
   const toPrestige = to.prestige + quantity;
 
   await getRepository(User).save({ username: fromUsername, prestige: toPrestige });
   await getRepository(User).save({ username: toUsername, prestige: fromPrestige });
 
-  await bot.sendMessage(chatId, `User ${fromUsername} now has ${fromPrestige}, and user ${toUsername} now has ${toPrestige}`);
+  await bot.sendMessage(chatId, [
+    `User ${fromUsername} now has ${fromPrestige},`,
+    `and user ${toUsername} now has ${toPrestige}`
+  ].join(' '));
 }

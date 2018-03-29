@@ -1,5 +1,4 @@
 import * as dedent from 'dedent';
-import { getRepository } from 'typeorm';
 import * as Tg from 'node-telegram-bot-api';
 
 export const HELP_REGEX = /^\/help@TheRealPrestigeBot$/;

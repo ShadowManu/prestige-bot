@@ -1,5 +1,6 @@
 import { getRepository } from 'typeorm';
 import * as Tg from 'node-telegram-bot-api';
+import { isNil } from 'lodash';
 
 import { User } from '../entity';
 
@@ -11,7 +12,7 @@ export async function showPrestige(bot: Tg, msg: Tg.Message) {
 
   const user = await getRepository(User).findOneById(username);
 
-  if (user) {
+  if (!isNil(user)) {
     const prestige = user.prestige;
     const message = `@${username}, you have <b>${prestige} PrestigeCoins</b>™`;
     await bot.sendMessage(chatId, message, { parse_mode: 'html'});
@@ -20,5 +21,5 @@ export async function showPrestige(bot: Tg, msg: Tg.Message) {
     const message = `User @${username} is not registered.`;
     await bot.sendMessage(chatId, message);
   }
-  
+
 }

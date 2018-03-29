@@ -1,17 +1,22 @@
 {
   "compilerOptions": {
     "alwaysStrict": true,
+    "allowUnreachableCode": false,
+    "allowUnusedLabels": false,
     "declaration": false,
-    "module": "commonjs",
-    "noImplicitAny": true,
-    "noImplicitReturns": true,
-    "noUnusedLocals": false,
-    "noUnusedParameters": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+    "module": "commonjs",
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
     "outDir": "./dist",
     "sourceMap": true,
     "strict": true,
+    "strictNullChecks": true,
     "target": "es6"
   },
   "include": [

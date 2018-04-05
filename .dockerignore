@@ -1,0 +1,13 @@
+# Docker
+*Dockerfile*
+*docker-compose*
+
+# Git
+.git
+
+# App
+node_modules
+.env
+
+# Database
+/data

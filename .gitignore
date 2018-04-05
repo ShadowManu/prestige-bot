@@ -60,8 +60,8 @@ typings/
 # next.js build output
 .next
 
-# Database file
-/database.sqlite3
+# Database files
+/data/
 
 # Build files
 /dist/

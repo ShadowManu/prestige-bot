@@ -41,8 +41,8 @@ export async function sendPrestige(bot: Tg, msg: Tg.Message, match: RegExpExecAr
   const fromPrestige = frm.prestige - quantity;
   const toPrestige = to.prestige + quantity;
 
-  await getRepository(User).save({ username: fromUsername, prestige: toPrestige });
-  await getRepository(User).save({ username: toUsername, prestige: fromPrestige });
+  await getRepository(User).save({ username: fromUsername, prestige: fromPrestige });
+  await getRepository(User).save({ username: toUsername, prestige: toPrestige });
 
   await bot.sendMessage(chatId, [
     `User ${fromUsername} now has ${fromPrestige},`,

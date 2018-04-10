@@ -10,7 +10,7 @@
     "start:prod": "node dist/main.js",
     "test": "npm run test:tsc && npm run test:lint",
     "test:tsc": "tsc --noEmit",
-    "test:lint": "tslint --project tsconfig.json",
+    "test:lint": "tslint --project tsconfig.json -t stylish",
     "migrations:run": "ts-node ./node_modules/typeorm/cli migrations:run"
   },
   "dependencies": {

@@ -16,11 +16,4 @@ export class User {
 
   @OneToMany(_type => Message, message => message.user)
   messages?: Message[];
-
-  constructor() {
-    this.id = undefined!;
-    this.username = undefined!;
-    this.prestige = undefined!;
-    this.messages = undefined!;
-  }
 }

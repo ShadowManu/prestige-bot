@@ -25,11 +25,4 @@ export class Message {
   // tslint:disable-next-line:no-reserved-keywords
   @ManyToOne(_type => User, user => user.messages)
   user?: User;
-
-  constructor() {
-    this.id = undefined!;
-    this.date = undefined!;
-    this.original = undefined!;
-    this.chat = undefined!;
-  }
 }

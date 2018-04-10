@@ -3,18 +3,19 @@ import { getRepository } from 'typeorm';
 import * as Tg from 'node-telegram-bot-api';
 
 import { User } from '../entity';
+import { referUser } from '../helpers';
+import { registerUser } from './register';
 
 export const LIST_REGEX = /^\/list@TheRealPrestigeBot$/;
 
 export async function listPrestige(bot: Tg, msg: Tg.Message) {
-  const chatId = msg.chat.id;
-
+  await registerUser(bot, msg, false);
   const users = await getRepository(User).find({ order: { prestige: 'DESC' } });
 
   const message = dedent`
     Users by prestige:
-    ${users.map(u => `- <b>${u.username}</b>: ${u.prestige}`).join('\n')}
+    ${users.map(u => `- <b>${referUser(u)}</b>: ${u.prestige}`).join('\n')}
   `;
 
-  await bot.sendMessage(chatId, message, { parse_mode: 'html' });
+  await bot.sendMessage(msg.chat.id, message, { parse_mode: 'html' });
 }

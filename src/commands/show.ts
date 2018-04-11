@@ -1,25 +1,23 @@
-import { getRepository } from 'typeorm';
+import * as dedent from 'dedent';
 import * as Tg from 'node-telegram-bot-api';
 import { isNil } from 'lodash';
 
-import { User } from '../entity';
+import { referUser, SYMBOLS as S } from '../helpers';
+import { registerUser } from './register';
 
 export const SHOW_REGEX = /^\/show@TheRealPrestigeBot$/;
 
 export async function showPrestige(bot: Tg, msg: Tg.Message) {
-  const chatId = msg.chat.id;
-  const username = msg.from!.username!;
-
-  const user = await getRepository(User).findOneById(username);
-
-  if (!isNil(user)) {
-    const prestige = user.prestige;
-    const message = `@${username}, you have <b>${prestige} PrestigeCoins</b>™`;
-    await bot.sendMessage(chatId, message, { parse_mode: 'html'});
-
-  } else {
-    const message = `User @${username} is not registered.`;
-    await bot.sendMessage(chatId, message);
+  async function send(message: string, opts?: Tg.SendMessageOptions) {
+    return bot.sendMessage(msg.chat.id, message, opts);
   }
 
+  const user = await registerUser(bot, msg, false);
+
+  if (isNil(user)) return send(dedent`
+    Couldn't find or auto-register user.
+    Contact the developers if you think that's an error.`
+  );
+
+  return send(`${referUser(user)}, you have <b>${user.prestige} ${S.PRESTIGE}</b>`, { parse_mode: 'html' });
 }

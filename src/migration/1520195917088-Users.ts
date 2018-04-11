@@ -1,25 +1,20 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class Message1523333856518 implements MigrationInterface {
+export class User1520195917088 implements MigrationInterface {
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(`
-      CREATE TABLE message (
+      CREATE TABLE users (
         id integer PRIMARY KEY,
-        text text,
-        date integer NOT NULL,
-
-        original text NOT NULL,
-
-        chat integer NOT NULL,
-        userId text REFERENCES user(id)
+        username text,
+        prestige integer NOT NULL
       );
     `);
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(`
-      DROP TABLE message;
+      DROP TABLE users;
     `);
   }
 

@@ -1,4 +1,4 @@
-import { TELEGRAM_TOKEN } from './config';
+import { TELEGRAM_TOKEN, TYPEORM_URL } from './config';
 import { createConnection } from 'typeorm';
 
 import * as Tg from 'node-telegram-bot-api';
@@ -6,7 +6,12 @@ import * as Tg from 'node-telegram-bot-api';
 import * as c from './commands';
 
 async function bootstrap() {
-  await createConnection();
+  await createConnection({
+    type: 'postgres',
+    url: TYPEORM_URL,
+    entities: [`${__dirname}/entity/*{.js,.ts}`],
+    migrations: [`${__dirname}/migration/*{.js,.ts}`]
+  });
 
   const bot = new Tg(TELEGRAM_TOKEN, { polling: true });
 

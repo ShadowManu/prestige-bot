@@ -4,7 +4,7 @@ import * as Tg from 'node-telegram-bot-api';
 import { isNil } from 'lodash';
 
 import { User } from '../entity';
-import { referTgUser } from '../helpers';
+import { referUser } from '../helpers';
 
 const BASE_PRESTIGE = 50;
 
@@ -23,19 +23,18 @@ export async function registerUser(bot: Tg, msg: Tg.Message, interactive: boolea
 
   const id = msg.from.id;
   const username = msg.from.username;
-  const reference = referTgUser(msg.from);
 
   const existing = await getRepository(User).findOneById(id);
 
   // New user
   if (isNil(existing)) {
     const incoming = await getRepository(User).save({ id, username, prestige: BASE_PRESTIGE });
-    if (interactive) await send(`${reference}, welcome to the one and only, TheRealPrestigeBot.`);
+    if (interactive) await send(`${referUser(incoming)}, welcome to the one and only, TheRealPrestigeBot.`);
     return incoming;
 
   // Existing user
   } else  {
-    if (interactive) await send(`${reference}, we already track you, don't worry ;).`);
+    if (interactive) await send(`${referUser(existing)}, we already track you, don't worry ;).`);
     return existing;
   }
 }

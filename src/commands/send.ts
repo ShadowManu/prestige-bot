@@ -4,7 +4,7 @@ import { toNumber } from 'lodash';
 import { getRepository } from 'typeorm';
 
 import { User } from '../entity';
-import { referUser, PRESTIGE_SYMBOL as PS } from '../helpers';
+import { referUser, SYMBOLS as S } from '../helpers';
 import { registerUser } from './register';
 
 export const SEND_REGEX = /^\/send@TheRealPrestigeBot @(\S+) (\d+)$/;
@@ -36,8 +36,8 @@ export async function sendPrestige(bot: Tg, msg: Tg.Message, match: RegExpExecAr
   await getRepository(User).save({ id: to.id, prestige: toPrestige });
 
   return send(dedent`
-    ${referUser(frm)} (\u2b06${fromPrestige}️)
-        has gifted <b>${quantity} ${PS}</b> to
-    ${referUser(to)} (\u2b07${toPrestige})
+    ${referUser(frm)} (${S.DOWN_ARROW}${fromPrestige}️)
+        has gifted <b>${quantity} ${S.PRESTIGE}</b> to
+    ${referUser(to)} (${S.UP_ARROW}${toPrestige})
   `, { parse_mode: 'html' });
 }

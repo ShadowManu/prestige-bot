@@ -14,7 +14,7 @@ export async function listPrestige(bot: Tg, msg: Tg.Message) {
 
   const message = dedent`
     Users by prestige:
-    ${users.map(u => `- <b>${referUser(u)}</b>: ${u.prestige}`).join('\n')}
+    ${users.map(u => `- <b>${referUser(u, false)}</b>: ${u.prestige}`).join('\n')}
   `;
 
   await bot.sendMessage(msg.chat.id, message, { parse_mode: 'html' });

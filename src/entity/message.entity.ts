@@ -4,7 +4,7 @@ import { User } from './user.entity';
 
 @Entity()
 export class Message {
-  @PrimaryColumn('number')
+  @PrimaryColumn('integer')
   id: number;
 
   @Column('text')

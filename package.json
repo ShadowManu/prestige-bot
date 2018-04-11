@@ -11,6 +11,7 @@
     "test": "npm run test:tsc && npm run test:lint",
     "test:tsc": "tsc --noEmit",
     "test:lint": "tslint --project tsconfig.json -t stylish",
+    "typeorm": "ts-node ./node_modules/typeorm/cli",
     "migrations:run": "ts-node ./node_modules/typeorm/cli migrations:run"
   },
   "dependencies": {

@@ -38,6 +38,11 @@ export async function sendPrestige(bot: Tg, msg: Tg.Message, match: RegExpExecAr
     return;
   }
 
+  if (quantity < 1) {
+    await bot.sendMessage(chatId, `You can't send less than 1 prestige.`);
+    return;
+  }
+
   const fromPrestige = frm.prestige - quantity;
   const toPrestige = to.prestige + quantity;
 

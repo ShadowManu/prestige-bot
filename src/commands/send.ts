@@ -1,6 +1,6 @@
 import * as dedent from 'dedent';
 import * as Tg from 'node-telegram-bot-api';
-import { toNumber } from 'lodash';
+import { isNil, toNumber } from 'lodash';
 import { getRepository } from 'typeorm';
 
 import { User } from '../entity';
@@ -14,7 +14,7 @@ export async function sendPrestige(bot: Tg, msg: Tg.Message, match: RegExpExecAr
     return bot.sendMessage(msg.chat.id, message, opts);
   }
 
-  // tslint:disable:no-magic-numbers
+  // tslint:disable:no-magic-numbers strict-boolean-expressions
   const username = match[1];
   const quantity = toNumber(match[2]) || 0;
   // tslint:enable
@@ -23,8 +23,8 @@ export async function sendPrestige(bot: Tg, msg: Tg.Message, match: RegExpExecAr
   const to = await getRepository(User).findOne({ username });
 
   // Verify all conditions for failure
-  if (!frm) return send(`You are not registered.`);
-  if (!to) return send(`Couldn't find ${username} in the system.`);
+  if (isNil(frm)) return send(`You are not registered.`);
+  if (isNil(to)) return send(`Couldn't find ${username} in the system.`);
   if (frm.id === to.id) return send(`Don't send yourself prestige ${referUser(frm)}, you dickhead.`);
   if (quantity <= 0) return send(`You can only send positive quantities, ${referUser(frm)}.`);
   if (frm.prestige < quantity) return send(`You do not have enough prestige, ${referUser(frm)}.`);

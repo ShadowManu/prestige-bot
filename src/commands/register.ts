@@ -13,12 +13,12 @@ export const REGISTER_REGEX = /^\/register@TheRealPrestigeBot$/;
 export async function registerUser(bot: Tg, msg: Tg.Message, interactive: boolean): Promise<User | undefined> {
   async function send(message: string) { return bot.sendMessage(msg.chat.id, message); }
 
-  if (!msg.from) {
+  if (isNil(msg.from)) {
     if (interactive) await send(dedent`
       Couldn't register user as the message doesn't have a sender.
       Contact the developers if you think that's an error.`
     );
-    return;
+    return undefined;
   }
 
   const id = msg.from.id;

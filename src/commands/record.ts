@@ -1,5 +1,6 @@
-import { getRepository } from 'typeorm';
 import * as Tg from 'node-telegram-bot-api';
+import { isNil } from 'lodash';
+import { getRepository } from 'typeorm';
 
 import { Message } from '../entity';
 import { registerUser } from './register';
@@ -20,6 +21,6 @@ function toMessageRow(msg: Tg.Message): Message {
     original: JSON.stringify(msg),
 
     chat: msg.chat.id,
-    userId: msg.from && msg.from.id
+    userId: isNil(msg.from) ? undefined : msg.from.id
   };
 }

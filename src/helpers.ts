@@ -1,6 +1,4 @@
-import * as Tg from 'node-telegram-bot-api';
-
-import { toString } from 'lodash';
+import { isNil, toString } from 'lodash';
 
 import { User } from './entity';
 
@@ -11,8 +9,8 @@ export const SYMBOLS = {
 };
 
 export function referUser(user: User, mention = true): string {
-  if (user.username)
-    return mention ? `@${user.username}` : user.username;
+  if (isNil(user.username))
+    return toString(user.id);
 
-  return toString(user.id);
+  return mention ? `@${user.username}` : user.username;
 }

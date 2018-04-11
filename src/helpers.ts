@@ -4,12 +4,15 @@ import { toString } from 'lodash';
 
 import { User } from './entity';
 
-export const PRESTIGE_SYMBOL = 'PrestigeCoins™';
-
-export function referTgUser(user: Tg.User): string {
-  return (user.username && `@${user.username}`) || user.first_name || toString(user.id);
-}
+export const SYMBOLS = {
+  PRESTIGE: 'PrestigeCoins™',
+  UP_ARROW: '\u{2b06}',
+  DOWN_ARROW: '\u{2b07}'
+};
 
 export function referUser(user: User, mention = true): string {
-  return (user.username && `${mention && '@'}${user.username}`) ||  toString(user.id);
+  if (user.username)
+    return mention ? `@${user.username}` : user.username;
+
+  return toString(user.id);
 }

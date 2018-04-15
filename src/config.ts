@@ -5,4 +5,6 @@ process.env.NTBA_FIX_319 = 'aware';
 
 export const TELEGRAM_TOKEN = process.env.TELEGRAM_TOKEN!;
 
+export const TYPEORM_URL = process.env.TYPEORM_URL;
+
 export const BOT_NAME = 'TheRealPrestigeBot';

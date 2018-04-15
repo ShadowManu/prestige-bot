@@ -1,5 +1,5 @@
 import * as dedent from 'dedent';
-import { getRepository } from 'typeorm';
+import { getRepository, getConnection } from 'typeorm';
 import * as Tg from 'node-telegram-bot-api';
 import { isNil } from 'lodash';
 
@@ -26,15 +26,19 @@ export async function registerUser(bot: Tg, msg: Tg.Message, interactive: boolea
 
   const existing = await getRepository(User).findOneById(id);
 
-  // New user
-  if (isNil(existing)) {
-    const incoming = await getRepository(User).save({ id, username, prestige: BASE_PRESTIGE });
-    if (interactive) await send(`${referUser(incoming)}, welcome to the one and only, TheRealPrestigeBot.`);
-    return incoming;
+  const [updated] = await getConnection().query(`
+    INSERT INTO users (id, username, prestige)
+    VALUES ($1, $2, $3)
+    ON CONFLICT (id) DO UPDATE SET username = EXCLUDED.username
+    RETURNING *;
+  `, [id, username, BASE_PRESTIGE]) as [User];
 
-  // Existing user
-  } else  {
-    if (interactive) await send(`${referUser(existing)}, we already track you, don't worry ;).`);
-    return existing;
+  if (interactive) {
+    await send(isNil(existing) ?
+      `${referUser(updated)}, welcome to the one and only, TheRealPrestigeBot.` :
+      `${referUser(existing)}, we already track you, don't worry ;).`
+    );
   }
+
+  return updated;
 }

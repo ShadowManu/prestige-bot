@@ -4,8 +4,8 @@ export class User1520195917088 implements MigrationInterface {
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(`
-      CREATE TABLE user (
-        id integer PRIMARY KEY,
+      CREATE TABLE users (
+        id bigint PRIMARY KEY,
         username text,
         prestige integer NOT NULL
       );
@@ -14,7 +14,7 @@ export class User1520195917088 implements MigrationInterface {
 
   public async down(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(`
-      DROP TABLE user;
+      DROP TABLE users;
     `);
   }
 

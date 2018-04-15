@@ -18,7 +18,7 @@
     "strict": true,
     "strictNullChecks": true,
     "strictPropertyInitialization": false, // TypeOrm Entities
-    "target": "es6"
+    "target": "ESNext"
   },
   "include": [
     "src/**/*"

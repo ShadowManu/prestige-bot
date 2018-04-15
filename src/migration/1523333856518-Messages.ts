@@ -1,10 +1,10 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class Message1523333856518 implements MigrationInterface {
+export class Messages1523333856518 implements MigrationInterface {
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(`
-      CREATE TABLE message (
+      CREATE TABLE messages (
         id integer PRIMARY KEY,
         text text,
         date integer NOT NULL,
@@ -12,14 +12,14 @@ export class Message1523333856518 implements MigrationInterface {
         original text NOT NULL,
 
         chat integer NOT NULL,
-        userId text REFERENCES user(id)
+        "userId" integer REFERENCES users(id)
       );
     `);
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(`
-      DROP TABLE message;
+      DROP TABLE messages;
     `);
   }
 

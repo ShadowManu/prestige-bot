@@ -31,7 +31,7 @@ export async function registerUser(bot: Tg, msg: Tg.Message, interactive: boolea
     VALUES ($1, $2, $3)
     ON CONFLICT (id) DO UPDATE SET username = EXCLUDED.username
     RETURNING *;
-  `, [id, username, BASE_PRESTIGE]);
+  `, [id, username, BASE_PRESTIGE]) as [User];
 
   if (interactive) {
     await send(isNil(existing) ?

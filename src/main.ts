@@ -12,6 +12,7 @@ async function bootstrap() {
 
   // Add all event listeners
   bot.onText(c.HELP_REGEX, async msg => c.help(bot, msg));
+  bot.onText(c.ISSUES_REGEX, async msg => c.respondIssues(bot, msg));
   bot.onText(c.LIST_REGEX, async msg => c.listPrestige(bot, msg));
   bot.onText(c.RECORD_REGEX, async msg => c.recordMessage(bot, msg));
   bot.onText(c.REGISTER_REGEX, async msg => c.registerUser(bot, msg, true));
